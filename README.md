@@ -178,6 +178,7 @@ Encontrou um bug? [Abra uma issue](https://github.com/elivaldorocha/depth-reader
 - **Marinha do Brasil** pelo fornecimento gratuito das cartas náuticas
 - **Comunidade QGIS** pelo excelente framework
 - **Desenvolvedores** do OpenCV, Tesseract e EasyOCR
+- **Grupo "Minicurso Eventos Extremos"** - Comunidade de aprendizado e troca de conhecimentos mantido pelo **Prof. Dr. Joaquim Carlos Barbosa Queiroz**
 
 ---
 
