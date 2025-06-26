@@ -64,18 +64,82 @@ Se a instalação automática falhar:
 
 ### Instalar Tesseract Engine (Recomendado)
 
-**Windows:**
-1. Baixar de [https://github.com/UB-Mannheim/tesseract/wiki](https://github.com/UB-Mannheim/tesseract/wiki)
-2. Durante instalação, marcar **"Add Tesseract to PATH"**
+#### **Windows:**
 
-**Linux (Ubuntu/Debian):**
+**Método 1 - Instalador Oficial:**
+1. Baixar o instalador de [https://github.com/UB-Mannheim/tesseract/wiki](https://github.com/UB-Mannheim/tesseract/wiki)
+2. Executar o instalador como administrador
+3. **Importante**: Anotar o diretório de instalação (geralmente `C:\Program Files\Tesseract-OCR`)
+
+**Método 2 - Configuração Manual do PATH (Recomendado):**
+
+Como o instalador nem sempre adiciona automaticamente ao PATH do sistema, siga estes passos:
+
+1. **Abrir Configurações do Sistema:**
+   - Pressionar `Win + R`, digitar `sysdm.cpl` e pressionar Enter
+   - OU ir em Painel de Controle → Sistema → Configurações avançadas do sistema
+
+2. **Acessar Variáveis de Ambiente:**
+   - Clicar em **"Variáveis de Ambiente..."**
+
+3. **Editar a variável PATH:**
+   - Na seção **"Variáveis do sistema"**, localizar e selecionar **"Path"**
+   - Clicar em **"Editar..."**
+   - Clicar em **"Novo"**
+   - Adicionar o caminho completo do Tesseract: `C:\Program Files\Tesseract-OCR`
+   - Clicar em **"OK"** em todas as janelas
+
+4. **Verificar instalação:**
+   - Abrir um novo **Prompt de Comando** (cmd)
+   - Digitar: `tesseract --version`
+   - Se aparecer a versão do Tesseract, a instalação foi bem-sucedida
+
+**Método 3 - Configuração Específica no Plugin:**
+
+Se preferir não alterar o PATH do sistema:
+
+1. **Localizar o executável do Tesseract:**
+   - Caminho padrão: `C:\Program Files\Tesseract-OCR\tesseract.exe`
+
+2. **Configurar no código Python (se necessário):**
+   ```python
+   import pytesseract
+   pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+   ```
+
+#### **Linux (Ubuntu/Debian):**
 ```bash
+sudo apt-get update
 sudo apt-get install tesseract-ocr
+
+# Verificar instalação
+tesseract --version
 ```
 
-**macOS:**
+**Para idiomas específicos:**
 ```bash
+# Instalar pacotes de idiomas (opcional)
+sudo apt-get install tesseract-ocr-por  # Português
+sudo apt-get install tesseract-ocr-eng  # Inglês (geralmente já incluído)
+```
+
+#### **macOS:**
+
+**Com Homebrew:**
+```bash
+# Instalar Homebrew (se não tiver)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Instalar Tesseract
 brew install tesseract
+
+# Verificar instalação
+tesseract --version
+```
+
+**Com MacPorts:**
+```bash
+sudo port install tesseract
 ```
 
 ## 📊 Dados Compatíveis
@@ -114,8 +178,25 @@ subprocess.check_call(['pip', 'install', 'opencv-python'])
 ```
 
 ### "TesseractNotFoundError"
-1. Instalar Tesseract Engine (ver seção de instalação)
-2. Se problema persistir, configurar caminho manualmente nas configurações do plugin
+
+**Solução 1 - Verificar PATH:**
+1. Abrir Prompt de Comando/Terminal
+2. Digitar: `tesseract --version`
+3. Se não funcionar, seguir os passos de configuração manual do PATH acima
+
+**Solução 2 - Configuração direta no código:**
+```python
+# No Console Python do QGIS, configurar caminho manualmente
+import pytesseract
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'  # Windows
+# pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'  # Linux
+# pytesseract.pytesseract.tesseract_cmd = '/opt/homebrew/bin/tesseract'  # macOS com Homebrew
+```
+
+**Solução 3 - Reinstalação:**
+1. Desinstalar Tesseract completamente
+2. Reinstalar seguindo os passos detalhados acima
+3. Reiniciar o computador após a instalação
 
 ### "EasyOCR initialization failed"
 - Verificar conexão com internet (EasyOCR baixa modelos automaticamente)
@@ -130,6 +211,12 @@ subprocess.check_call(['pip', 'install', 'opencv-python'])
 1. Verificar se está ativado em **Plugins → Gerenciar e Instalar Plugins**
 2. Procurar por erros no **Console Python do QGIS**
 3. Reinstalar dependências se necessário
+
+### Problemas específicos do Tesseract no Windows
+1. **Antivírus bloqueando**: Adicionar exceção para a pasta do Tesseract
+2. **Permissões**: Executar QGIS como administrador temporariamente
+3. **Espaços no caminho**: Evitar instalar em pastas com espaços ou caracteres especiais
+4. **Versões conflitantes**: Desinstalar versões antigas antes de instalar nova
 
 ## 📈 Características Técnicas
 
