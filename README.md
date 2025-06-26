@@ -49,10 +49,10 @@ Plugin QGIS para extração automática de valores de profundidade de cartas ná
 
 ## ⚙️ Instalação de Dependências
 
-### Automática (Recomendado)
+### Automática
 O plugin tentará instalar as dependências automaticamente na primeira execução.
 
-### Manual
+### Manual (Recomendado)
 Se a instalação automática falhar:
 
 1. **Abrir Console Python do QGIS** (Plugins → Console Python)
@@ -62,7 +62,7 @@ Se a instalação automática falhar:
    subprocess.check_call(['pip', 'install', 'opencv-python', 'pytesseract', 'easyocr', 'pillow'])
    ```
 
-### Instalar Tesseract Engine
+### Instalar Tesseract Engine (Recomendado)
 
 **Windows:**
 1. Baixar de [https://github.com/UB-Mannheim/tesseract/wiki](https://github.com/UB-Mannheim/tesseract/wiki)
