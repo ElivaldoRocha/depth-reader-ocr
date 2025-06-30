@@ -1,0 +1,27 @@
+# Arquivos compilados do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+
+# Ferramentas e configurações do QGIS Plugin Builder
+Makefile
+pb_tool.cfg
+plugin_upload.py
+pylintrc
+
+# Pastas de desenvolvimento e arquivos gerados
+help/
+i18n/
+scripts/
+test/
+README.html
+
+# Arquivos de configuração de editores de código
+.vscode/
+.idea/
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db

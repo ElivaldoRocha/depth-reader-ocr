@@ -1,0 +1,65 @@
+# This file contains metadata for your plugin.
+
+[general]
+name=Depth Reader OCR
+qgisMinimumVersion=3.16
+qgisMaximumVersion=3.99
+description=Extrai manual e automaticamente valores de profundidade de cartas náuticas brasileiras usando OCR
+version=1.1.0
+author=Elivaldo Rocha
+email=carvalhovaldo09@gmail.com
+
+about=Este plugin permite extrair manual e automaticamente valores de profundidade de cartas náuticas raster (GeoTIFF) da Marinha do Brasil usando OCR com múltiplas tecnologias (OpenCV, Tesseract, EasyOCR).
+    DEPENDÊNCIAS OBRIGATÓRIAS:
+    - opencv-python>=4.5.0 (processamento de imagem)
+    - pytesseract>=0.3.8 (OCR Tesseract)
+    - easyocr>=1.6.0 (OCR alternativo)
+    - pillow>=8.0.0 (manipulação de imagens)
+    INSTALAÇÃO DE DEPENDÊNCIAS:
+    O plugin tentará instalar as dependências automaticamente. Se falhar:
+    1. Abrir Console Python do QGIS (Plugins > Console Python)
+    2. Executar: import subprocess; subprocess.check_call(['pip', 'install', 'opencv-python', 'pytesseract', 'easyocr', 'pillow'])
+    3. Para Windows: Instalar Tesseract Engine de https://github.com/UB-Mannheim/tesseract/wiki
+    4. Reiniciar QGIS
+    DADOS COMPATÍVEIS:
+    Cartas Náuticas Raster (GeoTIFF) da Marinha do Brasil disponíveis gratuitamente em: https://www.marinha.mil.br/chm/dados-do-segnav/cartas-raster
+    CARACTERÍSTICAS TÉCNICAS:
+    OCR com múltiplas rotações (-90° a +270°), filtros adaptativos para melhor reconhecimento, interface com barra de progresso, sistema robusto de verificação de dependências, salvamento automático para análise posterior.
+
+tracker=https://github.com/elivaldorocha/depth-reader-ocr/issues
+repository=https://github.com/elivaldorocha/depth-reader-ocr
+homepage=https://github.com/elivaldorocha/depth-reader-ocr
+
+tags=batimetria,ocr,cartas nauticas,marinha brasil,opencv,tesseract,profundidade,nautico,geotiff,raster
+
+category=Raster
+icon=icon.png
+experimental=False
+deprecated=False
+
+hasProcessingProvider=no
+server=False
+
+changelog=1.1.0 - Versão Estável (2025-06-30)
+    - 🔧 CORREÇÃO CRÍTICA: Resolvido bug do QComboBox não responsivo na aba Avançado
+    - 🎛️ Interface de usuário completamente refeita com layout managers adequados
+    - ✨ Modo manual e automático de entrada de dados
+    - 🎯 Configurações avançadas funcionais (rotações, filtros, tamanho de recorte)
+    - 📊 Interface mais responsiva e compatível com diferentes resoluções
+    - 🧹 Código limpo e otimizado para melhor manutenção
+    - 📝 Documentação aprimorada e mensagens de usuário mais claras
+    - 🚀 Plugin pronto para uso em produção
+    1.0.0 - Lançamento inicial (2025-06-24)
+    - Sistema completo de OCR para cartas náuticas brasileiras
+    - Suporte para OpenCV, Tesseract e EasyOCR
+    - OCR multi-rotacional com 13 ângulos diferentes
+    - Filtros adaptativos para melhor reconhecimento
+    - Interface com barra de progresso e cancelamento
+    - Sistema automático de instalação de dependências
+    - Verificação robusta de dependências com fallbacks
+    - Salvamento automático de resultados em CSV
+    - Suporte completo para cartas GeoTIFF da Marinha do Brasil
+    - Debug automático com salvamento de imagens processadas
+    - Múltiplos algoritmos de pré-processamento
+    - Sistema de scoring inteligente para seleção de resultados
+    - Tratamento gracioso de erros com mensagens informativas
