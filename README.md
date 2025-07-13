@@ -8,7 +8,7 @@
 
 Plugin QGIS para extração **manual e automática** de valores de profundidade de cartas náuticas raster brasileiras usando OCR (Reconhecimento Óptico de Caracteres).
 
-![Demonstração do Plugin](https://via.placeholder.com/800x400/4CAF50/FFFFFF?text=Plugin+em+A%C3%A7%C3%A3o)
+[Demonstração do Plugin - ⚠️ 📹 ainda preparando o vídeo! 📹]()
 
 ## 🆕 Novidades da Versão 1.1.0
 
@@ -65,129 +65,228 @@ Plugin QGIS para extração **manual e automática** de valores de profundidade 
 2. Ir para **Plugins → Gerenciar e Instalar Plugins**
 3. Buscar por **"Depth Reader OCR"**
 4. Clicar em **Instalar**
+5. **⚠️Após instalar o plugin, feche o QGIS e execute a instalação de dependências️ externas externas ⚠️**
 
-### Método 2: Instalação Manual
-1. Baixar o arquivo ZIP do plugin em [Releases](https://github.com/elivaldorocha/depth-reader-ocr/releases)
+### Método 2: Instalação Manual Com Arquivo ZIP
+1. Baixar o arquivo ZIP do plugin em [versions](https://github.com/ElivaldoRocha/depth-reader-ocr/tree/main/versions)
 2. No QGIS: **Plugins → Gerenciar e Instalar Plugins → Instalar a partir do ZIP**
 3. Selecionar o arquivo ZIP baixado
 4. Clicar em **Instalar Plugin**
+5. **⚠️Após instalar o plugin, feche o QGIS e execute a instalação de dependências️ externas externas ⚠️**
 
-## 📦 Instalação de Dependências
+## 📦 Instalação de Dependências Externas 📦
 
 ### ⚠️ Aviso Importante sobre Compatibilidade
 **QGIS 3.40.x requer NumPy 1.26.x**. NumPy 2.x causará erros de compatibilidade com GDAL. Sempre use as versões especificadas abaixo.
 
+
 ### 🪟 Windows
 
-#### Método Recomendado - Console Python do QGIS
-1. Abrir **Plugins → Console Python**
-2. Executar o seguinte código:
+#### Instalação Manual de Dependências para o Plugin no QGIS (Windows)
 
-```python
-import subprocess
-import sys
-import os
+Este guia detalhado foi criado para ajudar usuários do QGIS no Windows a instalar corretamente todas as dependências necessárias para plugins de OCR. Seguindo estes passos cuidadosamente, você garantirá uma instalação estável e funcional.
 
-# Detecta o Python correto do QGIS
-if hasattr(sys, 'executable'):
-    python_exe = sys.executable
-    if python_exe.endswith('qgis-ltr-bin.exe'):
-        # Ajusta para o Python real do QGIS
-        qgis_dir = os.path.dirname(os.path.dirname(python_exe))
-        python_exe = os.path.join(qgis_dir, 'apps', 'Python312', 'python.exe')
-else:
-    # Fallback para QGIS 3.40.8
-    python_exe = r"C:\Program Files\QGIS 3.40.8\apps\Python312\python.exe"
+#### Pré-requisitos
 
-# Instala com versões compatíveis
-subprocess.check_call([python_exe, '-m', 'pip', 'install', 
-    'numpy==1.26.4',
-    'opencv-python==4.8.1.78', 
-    'pytesseract==0.3.13', 
-    'easyocr==1.7.2', 
-    'pillow==10.3.0'])
+- QGIS 3.40.8 instalado em seu computador
+- Conexão com a internet para baixar os arquivos necessários
+- Privilégios de Administrador no Windows para autorizar as instalações
 
-print("✅ Dependências instaladas com sucesso!")
+#### Passo a Passo da Instalação
+
+**Passo 1: Instalar o Programa Tesseract OCR**
+
+- Baixe o Instalador: [UB-Mannheim/tesseract](https://github.com/UB-Mannheim/tesseract/wiki)
+- Execute a instalação como administrador
+- Configure o PATH do sistema:
+  - `Win + R` → digite `sysdm.cpl`
+  - Aba "Avançado" → "Variáveis de Ambiente"
+  - Editar a variável `Path` → adicionar `C:\Program Files\Tesseract-OCR`
+  - Confirmar com "OK"
+
+Verifique: `tesseract --version` no CMD deve retornar a versão instalada.
+
+**Passo 2: Abrir o OSGeo4W Shell como Administrador**
+
+- Pesquise por "OSGeo4W Shell" no Menu Iniciar
+- Clique com o botão direito → "Abrir local do arquivo"
+- No Explorer: clique com o botão direito no atalho → "Executar como administrador"
+
+**Passo 3: Instalar as Bibliotecas Python**
+```bash
+where python
+```
+Resultado esperado: Você deve ver um caminho apontando para a sua pasta do QGIS, como ```C:\Program Files\QGIS 3.40.8\bin\python.exe```. 
+⚠️ Se aparecer um caminho diferente, feche o terminal e certifique-se de que abriu o OSGeo4W Shell corretamente seguindo o Passo 2.
+
+⚠️ No terminal do OSGeo4W Shell, exectute cada linha abaixo na sequência em que aparecem ⚠️
+```bash
+where python # para voce ter certeza que esta usando o python do QGIS
+cd "C:\Program Files\QGIS 3.40.8\bin" # redundância no procedimento para garantir local correto de intalação
+python.exe -m pip install --upgrade pip # atualizar o pip
+python -m pip install "pillow==10.3.0"
+python -m pip install "pytesseract==0.3.13"
+python -m pip install "opencv-python==4.8.1.78"
+python -m pip install "easyocr==1.7.2" --no-deps
+python -m pip install torch==2.2.0+cpu torchvision==0.17.0+cpu --index-url https://download.pytorch.org/whl/cpu
+python -m pip install "ninja==1.11.1.4" "pyclipper==1.3.0.post6" "python-bidi==0.6.6" "scikit-image==0.25.2"
 ```
 
-#### Solução de Problemas no Windows
+**Passo 4: Finalizar e Usar o Plugin**
 
-##### Erro: "Defaulting to user installation"
-Execute o QGIS como Administrador:
-1. Clique com botão direito no ícone do QGIS
-2. Escolha **"Executar como administrador"**
-3. Execute o comando de instalação novamente
+- Feche o OSGeo4W Shell
+- Abra o QGIS normalmente
 
-##### Erro: NumPy 2.x incompatível
-```cmd
-# Abrir Prompt de Comando como Administrador
-cd "C:\Program Files\QGIS 3.40.8\apps\Python312"
-python.exe -m pip uninstall numpy -y
-python.exe -m pip install numpy==1.26.4
-```
-
-##### Python da Microsoft Store interferindo
-1. Abrir **Configurações → Aplicativos → Configurações avançadas dos aplicativos**
-2. Procurar **"Aliases de execução de aplicativo"**
-3. **DESATIVAR** `python.exe` e `python3.exe`
+> ⚠️ Se aparecer alerta sobre `opencv-python-headless`, pode ser ignorado.
 
 ### 🐧 Linux
 
 #### Ubuntu/Debian
-```bash
-# Instalar pip se necessário
-sudo apt-get update
-sudo apt-get install python3-pip
 
-# No Console Python do QGIS
-import subprocess
-subprocess.check_call(['pip3', 'install', 
-    'numpy==1.26.4',
-    'opencv-python==4.8.1.78', 
-    'pytesseract==0.3.13', 
-    'easyocr==1.7.2', 
-    'pillow==10.3.0'])
+Este guia descreve a instalação manual de todas as dependências necessárias no Ubuntu, Debian e distribuições derivadas.
+
+---
+
+### ✅ Passo 1: Instalar o Tesseract OCR (Engine Externa)
+
+Diferente do Windows, no Linux o Tesseract é instalado facilmente através do gerenciador de pacotes do sistema.
+
+1. **Abra o Terminal**: `Ctrl + Alt + T` ou pesquise por "Terminal"
+2. **Atualize os repositórios de pacotes**:
+
+```bash
+sudo apt update
 ```
 
-#### Fedora/CentOS
-```bash
-# Instalar pip se necessário
-sudo dnf install python3-pip
+3. **Instale o Tesseract e o idioma português**:
 
-# Depois executar o mesmo comando Python acima no Console do QGIS
+```bash
+sudo apt install tesseract-ocr tesseract-ocr-por
 ```
 
-#### Arch Linux
-```bash
-# Instalar pip se necessário
-sudo pacman -S python-pip
+4. **Verifique a instalação**:
 
-# Depois executar o comando Python no Console do QGIS
+```bash
+tesseract --version
 ```
+
+Se a versção for exibida, a instalação foi bem sucedida.
+
+---
+
+### ✅ Passo 2: Instalar as Bibliotecas Python
+
+No Linux, o QGIS geralmente utiliza a instalação Python do próprio sistema. Vamos instalar os pacotes para o **usuário atual** para evitar alterações globais.
+
+1. **Confirme o Python correto**:
+
+```bash
+which python3
+```
+
+Resultado esperado:
+
+```
+/usr/bin/python3
+```
+
+2. **Instale os pacotes Python** (executar um por vez):
+
+```bash
+python3 -m pip install --user --upgrade pip
+python3 -m pip install --user pillow==10.3.0
+python3 -m pip install --user pytesseract==0.3.13
+python3 -m pip install --user opencv-python==4.8.1.78
+python3 -m pip install --user easyocr==1.7.2 --no-deps
+python3 -m pip install --user torch==2.2.0+cpu torchvision==0.17.0+cpu --index-url https://download.pytorch.org/whl/cpu
+python3 -m pip install --user ninja==1.11.1.4 pyclipper==1.3.0.post6 python-bidi==0.6.6 scikit-image==0.25.2
+```
+
+---
+
+### ✅ Passo 3: Finalizar e Usar o Plugin
+
+- Feche o terminal
+- Abra o **QGIS**
+- O plugin e todas as suas dependências agora estão instalados e prontos para uso
+
+> ⚠️  Se aparecer alerta sobre `opencv-python-headless`, pode ser ignorado.
+
 
 ### 🍎 macOS
 
+Este guia descreve a instalação manual de todas as dependências necessárias em um ambiente macOS.
+
+---
+
+### ✅ Passo 1: Instalar o Homebrew e o Tesseract OCR
+
+No macOS, o Homebrew é o gerenciador de pacotes mais comum e recomendado para instalar ferramentas de linha de comando como o Tesseract.
+
+1. **Abra o Terminal**  
+   - Vá em **Aplicativos > Utilitários > Terminal**  
+   - Ou pressione `Cmd + Espaço` e digite "Terminal"
+
+2. **Instale o Homebrew** (caso ainda não tenha):
+
 ```bash
-# Instalar Homebrew se não tiver
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Instalar Python via Homebrew
-brew install python
-
-# No Console Python do QGIS
-import subprocess
-subprocess.check_call(['pip3', 'install', 
-    'numpy==1.26.4',
-    'opencv-python==4.8.1.78', 
-    'pytesseract==0.3.13', 
-    'easyocr==1.7.2', 
-    'pillow==10.3.0'])
 ```
 
-**Nota**: macOS pode pedir para instalar Xcode Command Line Tools na primeira vez:
+3. **Instale o Tesseract e o idioma português**:
+
 ```bash
-xcode-select --install
+brew install tesseract
+brew install tesseract-lang
 ```
+
+4. **Verifique a instalação**:
+
+```bash
+tesseract --version
+```
+
+Se a versão for exibida, a instalação foi bem-sucedida.
+
+### ✅ Passo 2: Instalar as Bibliotecas Python no Ambiente do QGIS
+
+No macOS, o QGIS vem com seu próprio ambiente Python. Precisamos instalar os pacotes diretamente nele.
+
+1. **Identifique o Python do QGIS**  
+   O caminho padrão é):
+
+```bash
+/Applications/QGIS.app/Contents/MacOS/bin/python3
+```
+2. **Crie uma variável temporária no terminal**:
+
+```bash
+export QGIS_PYTHON="/Applications/QGIS.app/Contents/MacOS/bin/python3"
+```
+
+> ⚠️ Ajuste o caminho caso o QGIS esteja instalado em um local diferente.
+
+3. **Instale os pacotes Python** (executar um por vez):
+
+```bash
+$QGIS_PYTHON -m pip install --upgrade pip
+$QGIS_PYTHON -m pip install pillow==10.3.0
+$QGIS_PYTHON -m pip install pytesseract==0.3.13
+$QGIS_PYTHON -m pip install opencv-python==4.8.1.78
+$QGIS_PYTHON -m pip install easyocr==1.7.2 --no-deps
+$QGIS_PYTHON -m pip install torch==2.2.0+cpu torchvision==0.17.0+cpu --index-url https://download.pytorch.org/whl/cpu
+$QGIS_PYTHON -m pip install ninja==1.11.1.4 pyclipper==1.3.0.post6 python-bidi==0.6.6 scikit-image==0.25.2
+```
+
+---
+
+### ✅ Passo 3: Finalizar e Usar o Plugin
+
+- Feche o terminal
+- Abra o **QGIS**
+- O plugin e todas as suas dependências agora estão instalados e prontos para uso
+
+> ⚠️  Se aparecer alerta sobre `opencv-python-headless`, pode ser ignorado.
 
 ## 🔧 Instalação do Tesseract OCR
 
@@ -367,9 +466,12 @@ Este projeto está licenciado sob a **GNU General Public License v2.0** - veja o
 ## 👨‍💻 Autor
 
 **Elivaldo Rocha**
+
 - 📧 Email: carvalhovaldo09@gmail.com
+
 - 🐙 GitHub: [@elivaldorocha](https://github.com/elivaldorocha)
-- 🌐 LinkedIn: [Adicione seu LinkedIn aqui]
+
+- 🌐 LinkedIn: [Elivaldo Rocha](https://www.linkedin.com/in/elivaldo-rocha-10509b116/)
 
 ## 🤝 Contribuindo
 
