@@ -8,7 +8,7 @@
 
 Plugin QGIS para extração **manual e automática** de valores de profundidade de cartas náuticas raster brasileiras usando OCR (Reconhecimento Óptico de Caracteres).
 
-[Demonstração do Plugin - ⚠️ 📹 ainda preparando o vídeo! 📹]()
+[Demonstração do Plugin](https://youtu.be/rVcrYmj72XY?si=twYnWJ2nMt6-5aOR)
 
 ## 🆕 Novidades da Versão 1.1.0
 
